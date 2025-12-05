@@ -1,0 +1,98 @@
+{
+  "name": "Contact Formular for website",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dee01402-74eb-480a-af0f-45c6ef44dad9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8ad2dfea-e9d9-4ea0-a0e0-b6bc9f877634",
+      "name": "Webhook",
+      "webhookId": "dee01402-74eb-480a-af0f-45c6ef44dad9"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json.body; // <-- Wichtig!\n\n// Felder prüfen\nconst requiredFields = [\"name\", \"email\", \"message\"];\n\nfor (const field of requiredFields) {\n    if (!input[field] || input[field].trim() === \"\") {\n        throw new Error(`Feld ${field} fehlt!`);\n    }\n}\n\n// Nachricht erstellen\nconst notification =\n`Neue Kontaktformular-Nachricht:\n\nName: ${input.name}\nEmail: ${input.email}\nBetreff: ${input.subject || \"(kein Betreff)\"}\n\nNachricht:\n${input.message}`;\n\nreturn [{\n    json: {\n        notification,\n        ...input\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2e35b375-278c-42bb-a115-c89e9f04b0eb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "=8176155502",
+        "text": "=Sie haben eine Nachricht erhalten 😁😁😁\nEmail: {{ $json.email }}\n\nBetreff: {{ $json.subject }}\n\nNachricht: \n{{ $json.message }}",
+        "replyMarkup": "=none",
+        "forceReply": {},
+        "replyKeyboardOptions": {},
+        "replyKeyboardRemove": {},
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5fcb4b50-8ad9-4587-83fa-05d4c8911054",
+      "name": "Send a text message",
+      "webhookId": "8267724d-3a85-4d4c-86e2-6f9a9b3d8b38",
+      "credentials": {
+        "telegramApi": {
+          "id": "kY7fZa56yhUYXU1Q",
+          "name": "websiteformular"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f600d2c0-6377-49c6-b387-8ca7ac3affdc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e7f6140b0c370a3fbf2dfb84728facd0cff7eef80d4c4c944492dca59d046dbd"
+  },
+  "id": "nrKYyShTyOtVJ4tG",
+  "tags": []
+}
