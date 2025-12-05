@@ -1,19 +1,19 @@
 # 📬 Contact Form Workflow (n8n)
 
 This repository contains my n8n workflow for a website contact form.  
-The workflow receives submitted form data, validates the fields through a Code node, and sends a formatted message to Telegram.
+The workflow receives submitted form data, validates the fields through a Code node, and sends a formatted message to Telegram:
+<p align="center"> <img src="https://img.shields.io/badge/n8n-Workflow-orange?style=for-the-badge" /> <img src="https://img.shields.io/badge/Automation-Active-brightgreen?style=for-the-badge" /> <img src="https://img.shields.io/badge/Telegram-Notifications-26A5E4?style=for-the-badge" /> </p>
 
 ---
 
 ## 🚀 Features
 
-- Receives form submissions through a **POST Webhook**
-- Validates required fields:
-  - name  
-  - email  
-  - message  
-- Builds a clean and readable notification string
-- Sends the final message to Telegram
+✨ Webhook-based contact form handler
+✨ JavaScript validation for name, email, message
+✨ Readable message formatting
+✨ Instant Telegram notification
+✨ Simple to deploy on any n8n instance
+✨ 100% safe — no credentials stored in repo
 
 ---
 
